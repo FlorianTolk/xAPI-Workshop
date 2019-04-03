@@ -1280,13 +1280,18 @@ $("#clear-deleted-documents").click(function(e) {
 $("#endpoint-values").validator();
 
 // Update statement viewer links to pass auth via query string
-$("#endpoint-values").keyup(function() {
+$("#endpoint-values").keyup(function () {
     var root = $(".statement-viewer").attr("rel");
     console.log(root);
     var endpoint = $("#endpoint").val();
     var username = $("#username").val();
     var password = $("#password").val();
+    if (password == null && username == null) {
+        var username = "xapi-tools";
+        var password = "xapi-tools";
+    }
     var auth = "Basic%20" + toBase64(username + ":" + password);
+    
     $(".statement-viewer").attr("href", root + "?endpoint=" + endpoint + "&auth=" + auth);
 });
 
@@ -1338,11 +1343,19 @@ function setupConfig() {
     var user = $("#username").val();
     var password = $("#password").val();
 
+    if (password == "" || user == "") {
+        
+        user = "xapi-tools";
+        password = "xapi-tools";
+    }
+
     var conf = {
         "endpoint" : endpoint,
         "auth" : "Basic " + toBase64(user + ":" + password),
     };
     ADL.XAPIWrapper.changeConfig(conf);
+
+    console.log("user = " + user);
 }
 
 // Build statement from the GUI
