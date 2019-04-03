@@ -956,6 +956,10 @@ $("#endpoint-values").keyup(function() {
     var endpoint = $("#endpoint").val();
     var username = $("#username").val();
     var password = $("#password").val();
+    if (password == null && username == null) {
+        var username = "xapi-tools";
+        var password = "xapi-tools";
+    }
     var auth = "Basic%20" + toBase64(username + ":" + password);
     $(".statement-viewer").attr("href", root + "?endpoint=" + endpoint + "&auth=" + auth);
 });
@@ -1007,6 +1011,12 @@ function setupConfig() {
     var endpoint = $("#endpoint").val();
     var user = $("#username").val();
     var password = $("#password").val();
+    
+     if (password == "" || user == "") {
+        
+        user = "xapi-tools";
+        password = "xapi-tools";
+    }
 
     var conf = {
         "endpoint" : endpoint,
