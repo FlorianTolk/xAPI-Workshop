@@ -1012,6 +1012,12 @@ function setupConfig() {
     var endpoint = $("#endpoint").val();
     var user = $("#username").val();
     var password = $("#password").val();
+    
+     if (password == "" || user == "") {
+        
+        user = "xapi-tools";
+        password = "xapi-tools";
+    }
 
     if (password == "" || user == "") {
         
