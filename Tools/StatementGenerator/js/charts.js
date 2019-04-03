@@ -170,19 +170,36 @@ function formatMultiData(data) {
 }
 
 $(document).ready(function() {
-    ADL.launch(function(err, launchdata, xAPIWrapper) {
-        if (!err) {
-            ADL.XAPIWrapper = xAPIWrapper;
-            localStorage.setItem("baseURI", launchdata.customData.content);
-            console.log("--- content launched via xAPI Launch ---\n", ADL.XAPIWrapper.lrs, "\n", launchdata);
-        } else {
-            var conf = {
-                "endpoint" : $("#endpoint").val(),
-                "auth" : "Basic " + toBase64($("#username").val() + ":" + $("#password").val()),
-            };
-            ADL.XAPIWrapper.changeConfig(conf);
-            localStorage.setItem("baseURI", "http://adlnet.gov/event/xapiworkshop/myworkshop");
-            console.log("--- content not launched via xAPI Launch ---\n", ADL.XAPIWrapper.lrs);
+    ADL.launch(function (err, launchdata, xAPIWrapper) {
+        if ($("#username").val() != "" && $("#password").val() != "") {
+            if (!err) {
+                ADL.XAPIWrapper = xAPIWrapper;
+                localStorage.setItem("baseURI", launchdata.customData.content);
+                console.log("--- content launched via xAPI Launch ---\n", ADL.XAPIWrapper.lrs, "\n", launchdata);
+            } else {
+                var conf = {
+                    "endpoint": $("#endpoint").val(),
+                    "auth": "Basic " + toBase64($("#username").val() + ":" + $("#password").val()),
+                };
+                ADL.XAPIWrapper.changeConfig(conf);
+                localStorage.setItem("baseURI", "http://adlnet.gov/event/xapiworkshop/myworkshop");
+                console.log("--- content not launched via xAPI Launch ---\n", ADL.XAPIWrapper.lrs);
+            }
+        }
+        else {
+            if (!err) {
+                ADL.XAPIWrapper = xAPIWrapper;
+                localStorage.setItem("baseURI", launchdata.customData.content);
+                console.log("--- content launched via xAPI Launch ---\n", ADL.XAPIWrapper.lrs, "\n", launchdata);
+            } else {
+                var conf = {
+                    "endpoint": $("#endpoint").val(),
+                    "auth": "Basic " + toBase64("xapi-tools" + ":" + "xapi-tools"),
+                };
+                ADL.XAPIWrapper.changeConfig(conf);
+                localStorage.setItem("baseURI", "http://adlnet.gov/event/xapiworkshop/myworkshop");
+                console.log("--- content not launched via xAPI Launch ---\n", ADL.XAPIWrapper.lrs);
+            }
         }
     }, true);
 });
